@@ -1,0 +1,83 @@
+// Sanctuary Diary — AI companion endpoint (Vercel serverless function)
+// Your Gemini API key lives in Vercel as an Environment Variable named GEMINI_API_KEY.
+// It is never sent to the browser, so customers can't see or steal it.
+
+const FALLBACK_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"];
+
+const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
+
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) return res.status(500).json({ error: "GEMINI_API_KEY is not set in Vercel" });
+
+  let body = req.body || {};
+  if (typeof body === "string") {
+    try { body = JSON.parse(body); } catch (e) { body = {}; }
+  }
+
+  const companion = clip(body.companion, 40) || "Luna";
+  const you = clip(body.you, 40);
+  const entry = body.entry || {};
+  const history = Array.isArray(body.messages) ? body.messages.slice(-20) : [];
+
+  const system = [
+    `You are ${companion}, a warm, close best friend replying inside someone's private digital diary${you ? ` (their name is ${you})` : ""}.`,
+    "Speak in modern, casual Taglish (natural Filipino-English mix), like a real friend texting.",
+    "Keep replies short: 1 to 3 sentences. Be empathetic, specific to what they wrote, and end with a gentle question only when it helps.",
+    "Do not use emojis. Do not sound formal, preachy, or like a therapist. Do not diagnose.",
+    "If they made a mistake, be kind but honest; encourage them to make it right.",
+    "SAFETY: If they mention wanting to die, suicide, self-harm, or being in danger, respond with care, take it seriously, and clearly encourage them to reach a real person now: NCMH Crisis Hotline 1553 or 0917-899-8727 (24/7), Hopeline PH 0917-558-4673, or 911 if in immediate danger. Never give information that could be used to hurt themselves."
+  ].join("\n");
+
+  const entryText = [
+    "Here is my diary entry for today.",
+    entry.title ? `Title: ${clip(entry.title, 200)}` : "",
+    entry.mood ? `Mood: ${clip(entry.mood, 30)}` : "",
+    entry.reflection ? `Daily reflection: ${clip(entry.reflection, 80)}` : "",
+    entry.grateful ? `Grateful for: ${clip(entry.grateful, 300)}` : "",
+    "",
+    clip(entry.body, 6000)
+  ].filter(Boolean).join("\n");
+
+  // Build the conversation; Gemini expects alternating user/model turns starting with user.
+  const contents = [{ role: "user", parts: [{ text: entryText }] }];
+  for (const m of history) {
+    const role = m && m.role === "model" ? "model" : "user";
+    const text = clip(m && m.text, 2000).trim();
+    if (!text) continue;
+    const last = contents[contents.length - 1];
+    if (last.role === role) last.parts[0].text += "\n" + text;
+    else contents.push({ role, parts: [{ text }] });
+  }
+  if (contents[contents.length - 1].role === "model") {
+    contents.push({ role: "user", parts: [{ text: "(continue)" }] });
+  }
+
+  const models = [process.env.GEMINI_MODEL, ...FALLBACK_MODELS].filter((m, i, a) => m && a.indexOf(m) === i);
+
+  for (const model of models) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents,
+          generationConfig: { temperature: 0.85, maxOutputTokens: 4096 }
+        })
+      });
+      if (!r.ok) continue; // model not available or busy, try the next one
+      const data = await r.json();
+      const reply = (data?.candidates?.[0]?.content?.parts || []).map(p => p.text || "").join("").trim();
+      if (reply) return res.status(200).json({ reply });
+    } catch (e) {
+      // network hiccup, try the next model
+    }
+  }
+  return res.status(502).json({ error: "No reply from Gemini" });
+};
