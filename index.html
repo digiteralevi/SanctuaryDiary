@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sanctuary Diary</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a quiet glass rail on the left and one calm writing column; on phones the rail becomes a bottom tab bar */
+:root{
+  --bg:#f5f2f9; --surface:#ffffff; --surface-2:#eee8f6; --ink:#272031; --muted:#6c6380; --line:rgba(39,32,49,.10);
+  --accent:#7a5ca8; --accent-ink:#ffffff; --accent-soft:#e7ddf4; --gold:#ad8a3e; --gold-soft:#f2e7cd;
+  --leaf:#5c8c69; --leaf-dry:#b39a6c; --good:#2e8a66; --bad:#c0533e; --veil:rgba(245,242,249,.84);
+  --m5:#c79d3f; --m4:#6f9f66; --m3:#8b8fa6; --m2:#7480c2; --m1:#9a6488;
+  --shadow:0 1px 2px rgba(39,32,49,.05),0 10px 28px rgba(39,32,49,.07);
+  --f-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14121a; --surface:#1d1a26; --surface-2:#262233; --ink:#ece8f3; --muted:#a59cb6; --line:rgba(236,232,243,.10);
+    --accent:#b39ae0; --accent-ink:#17131f; --accent-soft:#2e2741; --gold:#d5b268; --gold-soft:#3a3222;
+    --leaf:#7fb38a; --leaf-dry:#a08b62; --good:#5cc49a; --bad:#e57a63; --veil:rgba(20,18,26,.82);
+    --m5:#d8b25a; --m4:#86b97c; --m3:#9ea2b8; --m2:#8f9ae0; --m1:#c487b2;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14121a; --surface:#1d1a26; --surface-2:#262233; --ink:#ece8f3; --muted:#a59cb6; --line:rgba(236,232,243,.10);
+  --accent:#b39ae0; --accent-ink:#17131f; --accent-soft:#2e2741; --gold:#d5b268; --gold-soft:#3a3222;
+  --leaf:#7fb38a; --leaf-dry:#a08b62; --good:#5cc49a; --bad:#e57a63; --veil:rgba(20,18,26,.82);
+  --m5:#d8b25a; --m4:#86b97c; --m3:#9ea2b8; --m2:#8f9ae0; --m1:#c487b2;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35); color-scheme:dark;
+}
+/* User-chosen skins win over the system setting */
+:root[data-skin="rose"]{--bg:#faf3f4;--surface:#fff;--surface-2:#f4e6e9;--ink:#33222a;--muted:#7c6570;--line:rgba(51,34,42,.10);--accent:#ad5570;--accent-ink:#fff;--accent-soft:#f2dbe1;--gold:#ad8a3e;--gold-soft:#f3e6cb;--leaf:#5c8c69;--leaf-dry:#b39a6c;--good:#2e8a66;--bad:#c0533e;--veil:rgba(250,243,244,.84);--m5:#c79d3f;--m4:#6f9f66;--m3:#8b8fa6;--m2:#7480c2;--m1:#9a6488;--shadow:0 1px 2px rgba(51,34,42,.05),0 10px 28px rgba(51,34,42,.07);color-scheme:light}
+:root[data-skin="ocean"]{--bg:#f0f5f8;--surface:#fff;--surface-2:#e0ebf2;--ink:#162935;--muted:#5b6f7e;--line:rgba(22,41,53,.10);--accent:#2d6d92;--accent-ink:#fff;--accent-soft:#d3e4ee;--gold:#ad8a3e;--gold-soft:#f1e6cc;--leaf:#4f8a6c;--leaf-dry:#b39a6c;--good:#2e8a66;--bad:#c0533e;--veil:rgba(240,245,248,.84);--m5:#c79d3f;--m4:#6f9f66;--m3:#8b8fa6;--m2:#5f83c2;--m1:#9a6488;--shadow:0 1px 2px rgba(22,41,53,.05),0 10px 28px rgba(22,41,53,.07);color-scheme:light}
+:root[data-skin="sage"]{--bg:#f2f5f0;--surface:#fff;--surface-2:#e3eadf;--ink:#1f2b22;--muted:#617062;--line:rgba(31,43,34,.10);--accent:#4d7759;--accent-ink:#fff;--accent-soft:#d8e5d8;--gold:#a8873d;--gold-soft:#efe5cb;--leaf:#4d7f5b;--leaf-dry:#b39a6c;--good:#2e8a66;--bad:#c0533e;--veil:rgba(242,245,240,.84);--m5:#c79d3f;--m4:#6f9f66;--m3:#8b8fa6;--m2:#7480c2;--m1:#9a6488;--shadow:0 1px 2px rgba(31,43,34,.05),0 10px 28px rgba(31,43,34,.07);color-scheme:light}
+:root[data-skin="sand"]{--bg:#f7f2ea;--surface:#fffdf9;--surface-2:#eee4d5;--ink:#382c22;--muted:#7a6959;--line:rgba(56,44,34,.11);--accent:#a26c3b;--accent-ink:#fff;--accent-soft:#eedac3;--gold:#a8873d;--gold-soft:#f1e5c9;--leaf:#5f8763;--leaf-dry:#b39a6c;--good:#2e8a66;--bad:#c0533e;--veil:rgba(247,242,234,.84);--m5:#c79d3f;--m4:#6f9f66;--m3:#8b8fa6;--m2:#7480c2;--m1:#9a6488;--shadow:0 1px 2px rgba(56,44,34,.05),0 10px 28px rgba(56,44,34,.07);color-scheme:light}
+:root[data-skin="midnight"]{--bg:#0f1117;--surface:#171a23;--surface-2:#20242f;--ink:#e9e7ef;--muted:#9997a8;--line:rgba(233,231,239,.09);--accent:#c9a55c;--accent-ink:#16120a;--accent-soft:#2c281e;--gold:#c9a55c;--gold-soft:#2c281e;--leaf:#7fb38a;--leaf-dry:#a08b62;--good:#5cc49a;--bad:#e57a63;--veil:rgba(15,17,23,.82);--m5:#d8b25a;--m4:#86b97c;--m3:#9ea2b8;--m2:#8f9ae0;--m1:#c487b2;--shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.4);color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ic{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.display{font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;text-wrap:balance;margin:0}
+.muted{color:var(--muted)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* App shell */
+.app{display:flex;height:100%;background:var(--bg)}
+.app.has-bg{background-image:linear-gradient(var(--veil),var(--veil)),var(--user-bg);background-size:cover;background-position:center}
+.rail{width:250px;flex:none;display:flex;flex-direction:column;gap:4px;padding-block:22px;padding-right:14px;padding-left:max(14px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:color-mix(in srgb,var(--surface) 62%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);overflow-y:auto}
+.brand{display:flex;align-items:center;gap:11px;padding:2px 8px 20px}
+.brand-mark{width:36px;height:36px;border-radius:11px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-size:23px;font-style:italic;font-weight:600;line-height:1}
+.brand-name{font-family:var(--f-display);font-size:23px;font-weight:600;line-height:1}
+.brand-sub{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.nav-btn{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:0;background:none;color:var(--muted);font-weight:500;font-size:14px;text-align:left;transition:background .15s,color .15s}
+.nav-btn:hover{color:var(--ink);background:color-mix(in srgb,var(--surface-2) 70%,transparent)}
+.nav-btn[aria-current="page"]{color:var(--ink);background:var(--surface);box-shadow:var(--shadow)}
+.nav-btn[aria-current="page"] .ic{color:var(--accent)}
+.nav-btn.help .ic{color:var(--bad)}
+.rail-garden{margin-top:16px;padding:12px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:center;text-align:left;width:100%}
+.rail-garden svg{width:58px;height:64px}
+.rail-garden .stage{font-weight:600;font-size:13.5px}
+.meter{height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:7px}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),var(--gold));border-radius:inherit;transition:width .6s ease}
+.rail-foot{margin-top:auto;padding-top:16px;display:flex;flex-direction:column;gap:4px}
+
+.main{flex:1;min-width:0;overflow-y:auto;padding-block:30px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.view{max-width:760px;margin:0 auto;display:none;flex-direction:column;gap:22px}
+.view.active{display:flex;animation:rise .35s ease both}
+@keyframes rise{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+.topbar{display:none}
+.tabbar{display:none}
+
+/* Cards and controls */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-title{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:11px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px;transition:transform .12s,background .15s,border-color .15s}
+.btn:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,var(--ink))}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);background:var(--surface-2)}
+.btn.danger{color:var(--bad)}
+.btn.danger.armed{background:var(--bad);color:#fff;border-color:transparent}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:13px;font-weight:600}
+.field .hint{font-size:12.5px;color:var(--muted)}
+.input{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:var(--bg);outline:none;transition:border-color .15s,box-shadow .15s}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:500;transition:all .15s}
+.chip:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:transparent}
+.chip .pts{font-family:var(--f-mono);font-size:11.5px;opacity:.7}
+.chip.neg[aria-pressed="true"]{background:var(--bad);color:#fff}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.status{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:5px 10px;border-radius:99px;background:var(--surface-2)}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.status.on i{background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 25%,transparent)}
+.status.saving i{background:var(--gold)}
+
+/* Today */
+.cover{position:relative;border-radius:18px;aspect-ratio:3.4/1;max-width:100%;min-height:120px;background:radial-gradient(120% 140% at 0% 0%,var(--accent-soft),transparent 60%),radial-gradient(120% 140% at 100% 100%,var(--gold-soft),transparent 55%),var(--surface-2);background-size:cover;background-position:center;overflow:hidden;border:1px solid var(--line)}
+.cover.has-img{background-size:cover}
+.cover-actions{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.glass-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(20,16,28,.48);color:#fff;font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.entry-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.salute{font-family:var(--f-display);font-style:italic;font-size:22px;color:var(--muted);margin:2px 0 0}
+.title-input{width:100%;border:0;background:none;outline:none;font-family:var(--f-display);font-weight:600;font-size:clamp(30px,5vw,42px);line-height:1.1;padding:0;letter-spacing:-.01em}
+.title-input::placeholder{color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.writer{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.writer textarea{display:block;width:100%;min-height:220px;border:0;outline:none;resize:none;background:none;padding:20px 22px;font-size:16px;line-height:1.75;overflow:hidden}
+.writer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px 10px 22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.photo-slot{border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:14px;background:none;width:100%;text-align:left;color:var(--muted)}
+.photo-slot:hover{border-color:var(--accent);color:var(--ink)}
+.photo-slot .ic{width:22px;height:22px}
+.photo-preview{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.photo-preview img{display:block;width:100%;max-height:380px;object-fit:cover}
+.photo-preview .glass-btn{position:absolute;right:10px;top:10px}
+.save-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.growth-preview{font-size:13.5px;color:var(--muted)}
+.growth-preview b{font-family:var(--f-mono);color:var(--leaf);font-weight:500}
+.growth-preview b.neg{color:var(--bad)}
+
+/* Companion */
+.companion{padding:0;overflow:hidden}
+.comp-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--gold));color:var(--accent-ink);font-family:var(--f-display);font-size:20px;font-style:italic;font-weight:600;flex:none}
+.comp-name{font-weight:600}
+.comp-sub{font-size:12.5px;color:var(--muted)}
+.comp-head .status{margin-left:auto}
+.chat{display:flex;flex-direction:column;gap:10px;padding:18px;max-height:420px;overflow-y:auto}
+.bubble{max-width:84%;padding:11px 15px;border-radius:16px;font-size:14.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble.model{align-self:flex-start;background:var(--surface-2);border-bottom-left-radius:5px}
+.bubble.user{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:5px}
+.typing{display:inline-flex;gap:4px;padding:4px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.support-card{align-self:stretch;border:1px solid color-mix(in srgb,var(--bad) 35%,var(--line));background:color-mix(in srgb,var(--bad) 7%,var(--surface));border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.support-card strong{display:flex;align-items:center;gap:8px}
+.support-card .num{font-size:15px}
+.comp-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.comp-input .input{border-radius:99px;padding-left:16px}
+.icon-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:0;background:var(--accent);color:var(--accent-ink);flex:none}
+.icon-btn .ic{width:18px;height:18px}
+.comp-empty{padding:26px 18px;text-align:center;color:var(--muted);font-size:14px}
+
+/* Journal */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{position:relative;flex:1;min-width:200px}
+.search .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search .input{padding-left:40px}
+.entries{display:flex;flex-direction:column;gap:10px}
+.entry{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:16px 18px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);text-align:left;width:100%;transition:border-color .15s,transform .15s}
+.entry:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));transform:translateY(-1px)}
+.entry-meta{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.entry h3{font-family:var(--f-display);font-size:22px;font-weight:600;margin:0;line-height:1.2}
+.entry p{margin:4px 0 0;color:var(--muted);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.entry-body{min-width:0}
+.entry img{width:72px;height:72px;border-radius:11px;object-fit:cover}
+.empty{padding:40px 20px;text-align:center;border:1.5px dashed var(--line);border-radius:var(--r);color:var(--muted)}
+.empty .display{font-size:26px;color:var(--ink);margin-bottom:6px}
+
+/* Garden */
+.garden-hero{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:28px;align-items:center}
+.garden-art{background:radial-gradient(80% 70% at 50% 40%,var(--accent-soft),transparent 70%),var(--surface-2);border-radius:20px;aspect-ratio:1/1.05;max-width:100%;display:grid;place-items:center;border:1px solid var(--line)}
+.garden-art svg{width:82%;height:auto}
+.stage-name{font-size:clamp(34px,5vw,46px);line-height:1.05}
+.big-num{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.ladder{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:6px}
+.rung{height:6px;border-radius:99px;background:var(--surface-2)}
+.rung.done{background:var(--leaf)}
+.rung.now{background:var(--gold)}
+.log{display:flex;flex-direction:column}
+.log-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log-row:last-child{border-bottom:0}
+.pos{color:var(--leaf)}.negc{color:var(--bad)}
+
+/* Insights */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{padding:16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.stat .v{font-family:var(--f-display);font-size:34px;font-weight:600;line-height:1}
+.stat .k{font-size:12.5px;color:var(--muted);margin-top:6px}
+.chart-wrap{overflow-x:auto}
+.chart-wrap svg{display:block;width:100%;min-width:520px;height:auto}
+.mood-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted)}
+.mood-legend span{display:inline-flex;align-items:center;gap:6px}
+
+/* Helplines */
+.lines{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.line-card{padding:18px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.line-card h3{margin:0;font-size:16px}
+.badge{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+.phone-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.phone-row .num{font-size:15px;user-select:all}
+.phone-row small{display:block;color:var(--muted);font-size:12px;font-family:var(--f-body)}
+.phone-actions{display:flex;gap:6px}
+.urgent{display:flex;gap:14px;align-items:flex-start;padding:18px;border-radius:var(--r);background:color-mix(in srgb,var(--bad) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--bad) 30%,var(--line))}
+.urgent .ic{color:var(--bad);width:22px;height:22px;margin-top:2px}
+
+/* Settings */
+.set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:none;padding:0;font-size:12px;color:var(--muted)}
+.swatch span{width:46px;height:46px;border-radius:14px;border:2px solid transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.swatch[aria-pressed="true"]{color:var(--ink);font-weight:600}
+.swatch[aria-pressed="true"] span{border-color:var(--ink)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.note{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* Lock screen */
+.lock{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));background:radial-gradient(70% 60% at 20% 10%,var(--accent-soft),transparent 60%),radial-gradient(60% 60% at 90% 90%,var(--gold-soft),transparent 60%),var(--bg)}
+.lock[hidden]{display:none}
+.lock-box{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.lock-box .brand-mark{width:54px;height:54px;font-size:34px;border-radius:16px}
+.lock-title{font-size:32px}
+.lock-msg{min-height:20px;font-size:13.5px;color:var(--muted)}
+.lock-msg.err{color:var(--bad)}
+.pin-dots{display:flex;gap:14px;margin:4px 0}
+.pin-dots i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--muted);transition:all .15s}
+.pin-dots i.on{background:var(--accent);border-color:var(--accent)}
+.pin-dots.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
+.key{height:62px;border-radius:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,transparent);font-family:var(--f-mono);font-size:22px;display:grid;place-items:center;transition:background .12s}
+.key:hover{background:var(--surface)}
+.key:active{background:var(--accent-soft)}
+.key.flat{border-color:transparent;background:none;font-family:var(--f-body);font-size:12.5px;color:var(--muted)}
+.lock-foot{font-size:12px;color:var(--muted);max-width:280px}
+.link-btn{border:0;background:none;color:var(--muted);text-decoration:underline;font-size:12.5px;padding:4px}
+
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-size:14px;font-weight:500;z-index:60;transition:all .25s;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:860px){
+  .rail{display:none}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 auto 4px;max-width:760px}
+  .topbar .brand{padding:0}
+  .main{padding-block:16px calc(96px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;justify-content:space-around;padding:8px max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:none;color:var(--muted);font-size:10.5px;font-weight:600;padding:4px 0;min-width:0}
+  .tab .ic{width:21px;height:21px}
+  .tab[aria-current="page"]{color:var(--accent)}
+  .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+  .garden-hero{grid-template-columns:1fr}
+  .garden-art{max-width:300px;margin:0 auto;width:100%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lines,.set-grid{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .entry{grid-template-columns:1fr}
+  .entry img{display:none}
+  .cover{aspect-ratio:2.4/1}
+  .bubble{max-width:92%}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6.5A2.5 2.5 0 0 0 4 21.5Z"/><path d="M8 7h8M8 11h6"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></symbol>
+  <symbol id="i-life" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M14.8 14.8l3.6 3.6M14.8 9.2l3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2Z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></symbol>
+  <symbol id="i-del" viewBox="0 0 24 24"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="m18 9-6 6M12 9l6 6"/></symbol>
+</svg>
+
+<!-- LOCK SCREEN -->
+<div id="lock" class="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <div class="lock-box">
+    <div class="brand-mark">S</div>
+    <div>
+      <div class="eyebrow" id="lockEyebrow">Private diary</div>
+      <h1 class="display lock-title" id="lockTitle">Welcome back</h1>
+    </div>
+    <div class="pin-dots" id="pinDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="lock-msg" id="lockMsg" role="status">Enter your 4-digit PIN</div>
+    <div class="keypad" id="keypad">
+      <button class="key" data-k="1">1</button><button class="key" data-k="2">2</button><button class="key" data-k="3">3</button>
+      <button class="key" data-k="4">4</button><button class="key" data-k="5">5</button><button class="key" data-k="6">6</button>
+      <button class="key" data-k="7">7</button><button class="key" data-k="8">8</button><button class="key" data-k="9">9</button>
+      <button class="key flat" id="forgotBtn" data-k="forgot">Forgot</button><button class="key" data-k="0">0</button>
+      <button class="key flat" data-k="del" aria-label="Delete digit"><svg class="ic"><use href="#i-del"/></svg></button>
+    </div>
+    <p class="lock-foot" id="lockFoot">Your entries stay on this device only.</p>
+    <button class="btn danger sm" id="resetAllBtn" hidden>Erase diary and start over</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app" inert>
+  <aside class="rail" aria-label="Main">
+    <div class="brand"><div class="brand-mark">S</div><div><div class="brand-name">Sanctuary</div><div class="brand-sub">Diary &middot; Garden</div></div></div>
+    <button class="nav-btn" data-go="today"><svg class="ic"><use href="#i-pen"/></svg>Write</button>
+    <button class="nav-btn" data-go="journal"><svg class="ic"><use href="#i-book"/></svg>Journal</button>
+    <button class="nav-btn" data-go="garden"><svg class="ic"><use href="#i-leaf"/></svg>Growth garden</button>
+    <button class="nav-btn" data-go="insights"><svg class="ic"><use href="#i-chart"/></svg>Insights</button>
+    <button class="nav-btn help" data-go="support"><svg class="ic"><use href="#i-life"/></svg>Helplines</button>
+    <button class="nav-btn" data-go="settings"><svg class="ic"><use href="#i-gear"/></svg>Settings</button>
+    <button class="rail-garden" data-go="garden" aria-label="Open growth garden">
+      <span id="railPlant"></span>
+      <span><span class="eyebrow">Garden</span><div class="stage" id="railStage">Seedling</div><div class="meter"><i id="railMeter" style="width:0%"></i></div></span>
+    </button>
+    <div class="rail-foot"><button class="nav-btn" data-action="lock"><svg class="ic"><use href="#i-lock"/></svg>Lock diary</button></div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="topbar">
+      <div class="brand"><div class="brand-mark">S</div><div><div class="brand-name">Sanctuary</div></div></div>
+      <button class="btn ghost sm" data-action="lock"><svg class="ic"><use href="#i-lock"/></svg>Lock</button>
+    </div>
+
+    <!-- WRITE -->
+    <section class="view" id="view-today" aria-label="Write">
+      <div class="cover" id="cover">
+        <div class="cover-actions">
+          <button class="glass-btn" id="coverBtn"><svg class="ic"><use href="#i-image"/></svg>Change cover</button>
+        </div>
+        <input type="file" id="coverFile" accept="image/*" hidden>
+      </div>
+
+      <div class="entry-head">
+        <div>
+          <div class="eyebrow" id="entryDate">Today</div>
+          <p class="salute" id="salute">Dear Luna,</p>
+        </div>
+        <div class="row">
+          <button class="btn ghost sm" id="backToday" hidden><svg class="ic"><use href="#i-back"/></svg>Back to today</button>
+          <span class="status" id="saveState"><i></i><span>Draft</span></span>
+        </div>
+      </div>
+
+      <input class="title-input" id="entryTitle" placeholder="Give today a title" maxlength="120" autocomplete="off">
+
+      <div class="field">
+        <span class="eyebrow">How are you feeling?</span>
+        <div class="chips" id="moodChips"></div>
+      </div>
+
+      <div class="writer">
+        <textarea id="entryBody" placeholder="Kumusta ang araw mo? Isulat mo lang dito, walang judgment."></textarea>
+        <div class="writer-foot">
+          <span class="num muted" style="font-size:12px" id="wordCount">0 words</span>
+          <span class="muted" style="font-size:12.5px">Auto-saved as you write</span>
+        </div>
+      </div>
+
+      <div id="photoArea">
+        <button class="photo-slot" id="photoBtn"><svg class="ic"><use href="#i-image"/></svg><span><b style="color:var(--ink)">Photo of the day</b><br><span style="font-size:13px">Optional. Add one moment you want to remember.</span></span></button>
+      </div>
+      <input type="file" id="photoFile" accept="image/*" hidden>
+
+      <div class="field">
+        <label for="entryGrateful">One thing I'm grateful for today</label>
+        <input class="input" id="entryGrateful" maxlength="200" placeholder="Kahit maliit lang, isulat mo" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <span class="eyebrow">Daily reflection</span>
+        <div class="chips" id="deedChips"></div>
+      </div>
+
+      <div class="save-row">
+        <span class="growth-preview" id="growthPreview">Saving adds <b>+5</b> growth to your garden</span>
+        <button class="btn primary" id="saveBtn"><svg class="ic"><use href="#i-leaf"/></svg>Save and water the garden</button>
+      </div>
+
+      <div class="card companion" id="companion">
+        <div class="comp-head">
+          <div class="avatar" id="compAvatar">L</div>
+          <div><div class="comp-name" id="compName">Luna</div><div class="comp-sub">Your diary companion</div></div>
+          <span class="status" id="aiState"><i></i><span>Ready</span></span>
+        </div>
+        <div class="chat" id="chat" aria-live="polite"></div>
+        <form class="comp-input" id="chatForm">
+          <input class="input" id="chatInput" placeholder="Reply to Luna..." autocomplete="off" maxlength="1500">
+          <button class="icon-btn" type="submit" aria-label="Send"><svg class="ic"><use href="#i-send"/></svg></button>
+        </form>
+      </div>
+    </section>
+
+    <!-- JOURNAL -->
+    <section class="view" id="view-journal" aria-label="Journal">
+      <div>
+        <div class="eyebrow">Your story so far</div>
+        <h1 class="display" style="font-size:clamp(34px,5vw,46px)">Journal</h1>
+      </div>
+      <div class="toolbar">
+        <div class="search"><svg class="ic"><use href="#i-search"/></svg><input class="input" id="searchInput" placeholder="Search your entries" autocomplete="off"></div>
+        <button class="btn primary" data-go="today" data-new="1"><svg class="ic"><use href="#i-plus"/></svg>Write today</button>
+      </div>
+      <div class="entries" id="entries"></div>
+    </section>
+
+    <!-- GARDEN -->
+    <section class="view" id="view-garden" aria-label="Growth garden">
+      <div class="garden-hero">
+        <div class="garden-art" id="gardenArt"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+          <div class="eyebrow">Growth garden</div>
+          <h1 class="display stage-name" id="gardenStage">Seedling</h1>
+          <p class="muted" id="gardenNote" style="margin:0"></p>
+          <div class="big-num" id="gardenPts">10 growth points</div>
+          <div class="ladder" id="ladder"></div>
+          <div class="muted" style="font-size:13px" id="gardenNext"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">How your garden grows</div></div>
+        <div class="note">Every saved entry adds <b class="num">+5</b>. Your daily reflection adds more: choosing peace <b class="num">+15</b>, helping someone <b class="num">+10</b>, self-care <b class="num">+5</b>. Reacting harshly takes <b class="num">-10</b>, and that's okay. Being honest with yourself is part of growing.</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Recent growth</div></div>
+        <div class="log" id="gardenLog"></div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="view" id="view-insights" aria-label="Insights">
+      <div>
+        <div class="eyebrow">Patterns over time</div>
+        <h1 class="display" style="font-size:clamp(34px,5vw,46px)">Insights</h1>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Mood, last 14 days</div></div>
+        <div class="chart-wrap" id="moodChart"></div>
+        <div class="mood-legend" id="moodLegend" style="margin-top:12px"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Reflections this month</div></div>
+        <div class="log" id="deedSummary"></div>
+      </div>
+    </section>
+
+    <!-- HELPLINES -->
+    <section class="view" id="view-support" aria-label="Helplines">
+      <div>
+        <div class="eyebrow">You are not alone</div>
+        <h1 class="display" style="font-size:clamp(34px,5vw,46px)">Talk to a real person</h1>
+        <p class="muted" style="margin:8px 0 0;max-width:60ch">If mabigat ang pinagdadaanan mo, these lines are free, confidential, and answered by trained counselors in English and Filipino.</p>
+      </div>
+      <div class="urgent"><svg class="ic"><use href="#i-alert"/></svg><div><b>Nasa panganib ka ba ngayon mismo?</b><br><span class="muted">Call <span class="num" style="color:var(--ink)">911</span> or go to the nearest emergency room.</span></div></div>
+      <div class="lines" id="lines"></div>
+      <p class="note">Numbers checked October 2026 from NCMH and Hopeline listings. Kung hindi sumagot ang isang number, subukan ang iba sa listahan.</p>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings" aria-label="Settings">
+      <div>
+        <div class="eyebrow">Make it yours</div>
+        <h1 class="display" style="font-size:clamp(34px,5vw,46px)">Settings</h1>
+      </div>
+      <div class="set-grid">
+        <div class="card" style="display:flex;flex-direction:column;gap:14px">
+          <div class="card-title">Profile</div>
+          <div class="field"><label for="setYou">Your name</label><input class="input" id="setYou" maxlength="40" placeholder="Ano'ng itatawag sa'yo?" autocomplete="off"></div>
+          <div class="field"><label for="setCompanion">Companion name</label><input class="input" id="setCompanion" maxlength="40" autocomplete="off"></div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px">
+          <div class="card-title">Security</div>
+          <div class="field"><label for="setPin">New 4-digit PIN</label><div class="row"><input class="input" id="setPin" inputmode="numeric" maxlength="4" type="password" placeholder="0000" style="max-width:130px" autocomplete="new-password"><button class="btn sm" id="savePinBtn">Update PIN</button></div></div>
+          <div class="field"><label for="setAutolock">Auto-lock after</label>
+            <select class="input" id="setAutolock" style="max-width:200px"><option value="1">1 minute</option><option value="5">5 minutes</option><option value="15">15 minutes</option><option value="0">Never</option></select>
+          </div>
+          <p class="note" style="margin:0">The PIN keeps others from casually opening your diary on this device.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <div class="card-title">Appearance</div>
+        <div class="swatches" id="swatches"></div>
+        <div class="field"><span style="font-size:13px;font-weight:600">App background photo</span>
+          <div class="row"><button class="btn sm" id="bgBtn"><svg class="ic"><use href="#i-image"/></svg>Upload background</button><button class="btn ghost sm" id="bgReset">Remove</button></div>
+          <input type="file" id="bgFile" accept="image/*" hidden>
+        </div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <div class="card-title">Your data</div>
+        <p class="note" style="margin:0">Everything is saved in this browser on this device. Make a backup now and then, lalo na bago mag-clear ng browser data o magpalit ng phone.</p>
+        <div class="row">
+          <button class="btn sm" id="exportBtn"><svg class="ic"><use href="#i-down"/></svg>Download backup</button>
+          <button class="btn sm" id="copyBackupBtn"><svg class="ic"><use href="#i-copy"/></svg>Copy backup text</button>
+          <button class="btn sm" id="importBtn"><svg class="ic"><use href="#i-up"/></svg>Restore from backup</button>
+          <input type="file" id="importFile" accept="application/json,.json,.txt" hidden>
+        </div>
+        <div class="row"><button class="btn danger sm" id="eraseBtn"><svg class="ic"><use href="#i-trash"/></svg>Erase everything</button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Main">
+    <button class="tab" data-go="today"><svg class="ic"><use href="#i-pen"/></svg>Write</button>
+    <button class="tab" data-go="journal"><svg class="ic"><use href="#i-book"/></svg>Journal</button>
+    <button class="tab" data-go="garden"><svg class="ic"><use href="#i-leaf"/></svg>Garden</button>
+    <button class="tab" data-go="insights"><svg class="ic"><use href="#i-chart"/></svg>Insights</button>
+    <button class="tab" data-go="support"><svg class="ic"><use href="#i-life"/></svg>Help</button>
+    <button class="tab" data-go="settings"><svg class="ic"><use href="#i-gear"/></svg>Settings</button>
+  </nav>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- constants ---------- */
+const MOODS=[{k:5,label:"Radiant"},{k:4,label:"Good"},{k:3,label:"Okay"},{k:2,label:"Low"},{k:1,label:"Heavy"}];
+const DEEDS=[
+  {k:"peace",label:"Chose peace and kindness",pts:15},
+  {k:"helped",label:"Helped someone",pts:10},
+  {k:"selfcare",label:"Self-care, stayed calm",pts:5},
+  {k:"harsh",label:"Reacted harshly",pts:-10}
+];
+const STAGES=[
+  {max:5,name:"Thirsty",note:"Medyo nalanta. One honest entry is enough to bring it back."},
+  {max:15,name:"Seedling",note:"Something small just started. Tuloy-tuloy lang."},
+  {max:30,name:"Sprout",note:"Your first leaves are out. Consistency is showing."},
+  {max:55,name:"Young plant",note:"Growing steady, one entry at a time."},
+  {max:80,name:"Budding",note:"A bud is forming. Malapit nang mamulaklak."},
+  {max:120,name:"In bloom",note:"Namumulaklak na. Look how far you've come."},
+  {max:Infinity,name:"Full garden",note:"A whole garden, built from ordinary days."}
+];
+const SKINS=[
+  {k:"auto",label:"Lilac",c:["#f5f2f9","#7a5ca8"]},
+  {k:"rose",label:"Rose",c:["#faf3f4","#ad5570"]},
+  {k:"ocean",label:"Ocean",c:["#f0f5f8","#2d6d92"]},
+  {k:"sage",label:"Sage",c:["#f2f5f0","#4d7759"]},
+  {k:"sand",label:"Sand",c:["#f7f2ea","#a26c3b"]},
+  {k:"midnight",label:"Midnight",c:["#0f1117","#c9a55c"]}
+];
+const LINES=[
+  {name:"NCMH Crisis Hotline",org:"National Center for Mental Health",badge:"24/7 crisis line",nums:[["1553","Landline, toll-free"],["0919-057-1553","Smart / TNT"],["0917-899-8727","Globe / TM"],["0966-351-4518","Globe / TM"]]},
+  {name:"Hopeline PH",org:"Natasha Goulbourn Foundation",badge:"24/7 suicide prevention",nums:[["(02) 8804-4673","Landline"],["0917-558-4673","Globe / TM"],["0918-873-4673","Smart"]]}
+];
+const CRISIS=/(suicid|kill myself|end my life|want to die|wanna die|self[- ]?harm|hurt myself|cut myself|magpakamatay|mamatay na lang|ayoko na(ng)? mabuhay|gusto ko na(ng)? mamatay|saktan ang sarili|sasaktan ko ang sarili|wakasan ang buhay|walang saysay ang buhay ko|tapusin ko na lahat)/i;
+
+/* ---------- storage (IndexedDB with in-memory fallback) ---------- */
+const DB=(()=>{
+  const mem=new Map(); let dbp=null;
+  function open(){
+    if(dbp) return dbp;
+    dbp=new Promise(res=>{
+      try{const r=indexedDB.open("sanctuary-diary",1);
+        r.onupgradeneeded=()=>r.result.createObjectStore("kv");
+        r.onsuccess=()=>res(r.result); r.onerror=()=>res(null); r.onblocked=()=>res(null);
+      }catch(e){res(null)}
+    });
+    return dbp;
+  }
+  async function get(k){const db=await open(); if(!db) return mem.get(k);
+    return new Promise(res=>{try{const q=db.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>res(q.result===undefined?mem.get(k):q.result);q.onerror=()=>res(mem.get(k))}catch(e){res(mem.get(k))}})}
+  async function set(k,v){mem.set(k,v);const db=await open(); if(!db) return false;
+    return new Promise(res=>{try{const tx=db.transaction("kv","readwrite");tx.objectStore("kv").put(v,k);tx.oncomplete=()=>res(true);tx.onerror=()=>res(false);tx.onabort=()=>res(false)}catch(e){res(false)}})}
+  async function clear(){mem.clear();const db=await open(); if(!db) return;
+    return new Promise(res=>{try{const tx=db.transaction("kv","readwrite");tx.objectStore("kv").clear();tx.oncomplete=()=>res();tx.onerror=()=>res()}catch(e){res()}})}
+  return {get,set,clear};
+})();
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+
+/* ---------- state ---------- */
+const S={
+  settings:{you:"",companion:"Luna",skin:"auto",autolock:5,bg:null,cover:null},
+  entries:{}, garden:{points:10,log:[]}, pin:null
+};
+let current=null;          // id of the entry being edited
+let aiMode="unknown";      // unknown | on | off
+let lastActive=Date.now();
+let locked=true;
+
+const pad=n=>String(n).padStart(2,"0");
+const dayId=(d=new Date())=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const fromId=id=>{const [y,m,d]=id.split("-").map(Number);return new Date(y,m-1,d)};
+const longDate=id=>fromId(id).toLocaleDateString("en-PH",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+const shortDate=id=>fromId(id).toLocaleDateString("en-PH",{weekday:"short",month:"short",day:"numeric"});
+const words=t=>(t.trim().match(/\S+/g)||[]).length;
+const stageIndex=p=>STAGES.findIndex(s=>p<=s.max);
+
+async function saveAll(keys){for(const k of keys) await DB.set(k,S[k]);}
+
+/* ---------- toast ---------- */
+let tt;function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600)}
+
+/* ---------- PIN ---------- */
+async function hashPin(pin,salt){
+  try{const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+":"+pin));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");}
+  catch(e){let h=2166136261;const s=salt+":"+pin;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return "f"+(h>>>0).toString(16)}
+}
+const newSalt=()=>{try{return Array.from(crypto.getRandomValues(new Uint8Array(12))).map(b=>b.toString(16).padStart(2,"0")).join("")}catch(e){return String(Math.random()).slice(2)}};
+
+let pinBuf="", pinMode="unlock", pinFirst="", eraseArmed=false;
+function setLockUI(){
+  const t=$("#lockTitle"), e=$("#lockEyebrow"), m=$("#lockMsg");
+  m.classList.remove("err");
+  if(pinMode==="setup"){e.textContent="First time here";t.textContent="Create your PIN";m.textContent="Choose 4 digits you'll remember";$("#forgotBtn").style.visibility="hidden"}
+  else if(pinMode==="confirm"){e.textContent="Almost done";t.textContent="Confirm your PIN";m.textContent="Enter the same 4 digits again";$("#forgotBtn").style.visibility="hidden"}
+  else{e.textContent="Private diary";t.textContent=S.settings.you?`Welcome back, ${S.settings.you}`:"Welcome back";m.textContent="Enter your 4-digit PIN";$("#forgotBtn").style.visibility="visible"}
+  drawDots();
+}
+function drawDots(){$$("#pinDots i").forEach((d,i)=>d.classList.toggle("on",i<pinBuf.length))}
+function shake(msg){const d=$("#pinDots");d.classList.remove("shake");void d.offsetWidth;d.classList.add("shake");const m=$("#lockMsg");m.textContent=msg;m.classList.add("err");pinBuf="";drawDots()}
+async function pressKey(k){
+  if(k==="del"){pinBuf=pinBuf.slice(0,-1);drawDots();return}
+  if(k==="forgot"){$("#resetAllBtn").hidden=false;$("#lockFoot").textContent="Walang paraan para i-recover ang PIN. Burahin lang ang diary sa device na ito para magsimula ulit.";return}
+  if(!/^\d$/.test(k)||pinBuf.length>=4) return;
+  pinBuf+=k;drawDots();
+  if(pinBuf.length<4) return;
+  const entered=pinBuf;pinBuf="";
+  if(pinMode==="setup"){pinFirst=entered;pinBuf="";pinMode="confirm";setLockUI();return}
+  if(pinMode==="confirm"){
+    if(entered!==pinFirst){pinMode="setup";pinFirst="";setLockUI();shake("Hindi nag-match. Try again.");return}
+    const salt=newSalt();S.pin={salt,hash:await hashPin(entered,salt)};await DB.set("pin",S.pin);
+    pinBuf="";unlock();toast("PIN saved. Your diary is ready.");return;
+  }
+  const h=await hashPin(entered,S.pin.salt);
+  if(h===S.pin.hash){pinBuf="";unlock()} else shake("Incorrect PIN. Try again.");
+}
+function unlock(){locked=false;lastActive=Date.now();$("#lock").hidden=true;$("#app").inert=false;$("#resetAllBtn").hidden=true;$("#lockFoot").textContent="Your entries stay on this device only.";renderAll()}
+function lockNow(){flushDraft();locked=true;pinMode=S.pin?"unlock":"setup";pinBuf="";setLockUI();$("#app").inert=true;$("#lock").hidden=false}
+
+/* ---------- navigation ---------- */
+let view="today";
+function go(v,opts={}){
+  view=v;
+  $$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-"+v));
+  $$(".nav-btn[data-go],.tab[data-go]").forEach(b=>{b.getAttribute("data-go")===v?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current")});
+  if(v==="today"&&opts.newToday) openEntry(dayId());
+  if(v==="journal") renderJournal();
+  if(v==="garden") renderGarden();
+  if(v==="insights") renderInsights();
+  $("#main").scrollTop=0;
+}
+
+/* ---------- entries ---------- */
+function blankEntry(id){return {id,title:"",body:"",mood:0,deed:null,grateful:"",photo:null,chat:[],points:0,saved:false,updatedAt:Date.now()}}
+function getEntry(id){return S.entries[id]||(S.entries[id]=blankEntry(id))}
+function openEntry(id){
+  flushDraft();
+  current=id;const e=getEntry(id);
+  $("#entryDate").textContent=id===dayId()?"Today · "+longDate(id):longDate(id);
+  $("#backToday").hidden=id===dayId();
+  $("#entryTitle").value=e.title;
+  $("#entryBody").value=e.body;
+  $("#entryGrateful").value=e.grateful;
+  renderMood();renderDeeds();renderPhoto();autosize();updateCount();updateGrowthPreview();setSaveState(e.saved?"saved":"draft");
+  renderChat();
+}
+function renderMood(){
+  const e=getEntry(current);
+  $("#moodChips").innerHTML=MOODS.map(m=>`<button class="chip" data-mood="${m.k}" aria-pressed="${e.mood===m.k}"><span class="dot" style="background:var(--m${m.k})"></span>${m.label}</button>`).join("");
+}
+function renderDeeds(){
+  const e=getEntry(current);
+  $("#deedChips").innerHTML=DEEDS.map(d=>`<button class="chip${d.pts<0?" neg":""}" data-deed="${d.k}" aria-pressed="${e.deed===d.k}">${esc(d.label)} <span class="pts">${d.pts>0?"+":""}${d.pts}</span></button>`).join("");
+}
+function renderPhoto(){
+  const e=getEntry(current);
+  if(e.photo){$("#photoArea").innerHTML=`<div class="photo-preview"><img src="${e.photo}" alt="Photo of the day"><button class="glass-btn" id="photoRemove"><svg class="ic"><use href="#i-trash"/></svg>Remove</button></div>`}
+  else $("#photoArea").innerHTML=`<button class="photo-slot" id="photoBtn"><svg class="ic"><use href="#i-image"/></svg><span><b style="color:var(--ink)">Photo of the day</b><br><span style="font-size:13px">Optional. Add one moment you want to remember.</span></span></button>`;
+}
+function entryPoints(e){const d=DEEDS.find(x=>x.k===e.deed);return 5+(d?d.pts:0)}
+function updateGrowthPreview(){
+  const e=getEntry(current);const p=entryPoints(e);const delta=p-(e.saved?e.points:0);
+  const el=$("#growthPreview");
+  if(e.saved&&delta===0) el.innerHTML=`Saved. This entry gave your garden <b>${p>=0?"+":""}${p}</b>`;
+  else el.innerHTML=`Saving ${e.saved?"updates your garden by":"adds"} <b class="${delta<0?"neg":""}">${delta>=0?"+":""}${delta}</b> growth`;
+}
+function setSaveState(s){
+  const el=$("#saveState");el.className="status"+(s==="saved"?" on":s==="saving"?" saving":"");
+  el.querySelector("span").textContent=s==="saved"?"Saved":s==="saving"?"Saving":"Draft";
+}
+function autosize(){const t=$("#entryBody");t.style.height="auto";t.style.height=Math.max(220,t.scrollHeight)+"px"}
+function updateCount(){const n=words($("#entryBody").value);$("#wordCount").textContent=`${n} ${n===1?"word":"words"}`}
+let draftTimer=null;
+function queueDraft(){clearTimeout(draftTimer);setSaveState("saving");draftTimer=setTimeout(flushDraft,700)}
+function flushDraft(){
+  if(!current) return;clearTimeout(draftTimer);draftTimer=null;
+  const e=getEntry(current);
+  e.title=$("#entryTitle").value;e.body=$("#entryBody").value;e.grateful=$("#entryGrateful").value;e.updatedAt=Date.now();
+  DB.set("entries",S.entries);setSaveState(e.saved?"saved":"draft");
+}
+
+async function saveEntry(){
+  flushDraft();
+  const e=getEntry(current);
+  if(!e.body.trim()&&!e.title.trim()){toast("Magsulat muna ng kahit kaunti bago i-save.");$("#entryBody").focus();return}
+  const p=entryPoints(e);const delta=p-(e.saved?e.points:0);
+  const before=stageIndex(S.garden.points);
+  if(delta!==0){
+    S.garden.points=Math.max(0,S.garden.points+delta);
+    S.garden.log.unshift({at:Date.now(),day:e.id,pts:delta,why:e.saved?"Updated reflection":(DEEDS.find(d=>d.k===e.deed)?.label?"Entry + "+DEEDS.find(d=>d.k===e.deed).label.toLowerCase():"Wrote an entry")});
+    S.garden.log=S.garden.log.slice(0,60);
+  }
+  e.points=p;e.saved=true;e.updatedAt=Date.now();
+  await saveAll(["entries","garden"]);
+  setSaveState("saved");updateGrowthPreview();renderRail();
+  const after=stageIndex(S.garden.points);
+  toast(after>before?`Your garden grew into: ${STAGES[after].name}`:delta>0?`Garden watered, +${delta} growth`:delta<0?`Garden adjusted, ${delta} growth`:"Entry saved");
+  if(!e.chat.length){companionTurn(e)}
+  $("#companion").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* ---------- companion ---------- */
+function setAI(state){
+  const el=$("#aiState");el.className="status"+(state==="on"?" on":"");
+  el.querySelector("span").textContent=state==="on"?"AI online":state==="off"?"Offline mode":"Ready";
+}
+function renderChat(){
+  const e=getEntry(current);const box=$("#chat");
+  if(!e.chat.length){box.innerHTML=`<div class="comp-empty">Save your entry and ${esc(S.settings.companion)} will reply here.</div>`;return}
+  box.innerHTML="";
+  e.chat.forEach(m=>box.appendChild(bubbleEl(m)));
+  box.scrollTop=box.scrollHeight;
+}
+function bubbleEl(m){
+  if(m.role==="support"){
+    const d=document.createElement("div");d.className="support-card";
+    d.innerHTML=`<strong><svg class="ic"><use href="#i-life"/></svg>May makakausap ka ngayon, 24/7</strong>
+      <div>NCMH Crisis Hotline: <span class="num">1553</span> &middot; <span class="num">0917-899-8727</span> &middot; <span class="num">0919-057-1553</span></div>
+      <div>Hopeline PH: <span class="num">0917-558-4673</span> &middot; <span class="num">(02) 8804-4673</span></div>
+      <div class="muted">Kung nasa panganib ka ngayon, tumawag sa <span class="num">911</span>.</div>
+      <div><button class="btn sm" data-go="support">See all helplines</button></div>`;
+    return d;
+  }
+  const b=document.createElement("div");b.className="bubble "+(m.role==="user"?"user":"model");b.textContent=m.text;return b;
+}
+function showTyping(){const box=$("#chat");if(box.querySelector(".comp-empty"))box.innerHTML="";const b=document.createElement("div");b.className="bubble model";b.id="typing";b.innerHTML='<span class="typing"><span></span><span></span><span></span></span>';box.appendChild(b);box.scrollTop=box.scrollHeight}
+function hideTyping(){const t=$("#typing");if(t)t.remove()}
+
+async function companionTurn(e){
+  showTyping();
+  const lastUser=[...e.chat].reverse().find(m=>m.role==="user");
+  const crisisText=lastUser?lastUser.text:(e.body+" "+e.title);
+  const crisis=CRISIS.test(crisisText);
+  let reply=null;
+  if(aiMode!=="off"){
+    try{
+      const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        companion:S.settings.companion,you:S.settings.you,
+        entry:{title:e.title,body:e.body.slice(0,6000),mood:(MOODS.find(m=>m.k===e.mood)||{}).label||"",reflection:(DEEDS.find(d=>d.k===e.deed)||{}).label||"",grateful:e.grateful},
+        messages:e.chat.filter(m=>m.role==="user"||m.role==="model").slice(-20).map(m=>({role:m.role,text:m.text}))
+      })});
+      if(r.ok){const d=await r.json();if(d&&d.reply){reply=d.reply;aiMode="on";setAI("on")}}
+      else if(r.status===404||r.status===405){aiMode="off";setAI("off")}
+    }catch(err){aiMode="off";setAI("off")}
+  }
+  if(!reply){reply=offlineReply(e,crisis);reply=reply.charAt(0).toUpperCase()+reply.slice(1)}
+  await new Promise(r=>setTimeout(r,aiMode==="on"?0:650));
+  hideTyping();
+  e.chat.push({role:"model",text:reply});
+  if(crisis&&!e.chat.some(m=>m.role==="support")) e.chat.push({role:"support"});
+  DB.set("entries",S.entries);
+  renderChat();
+}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function offlineReply(e,crisis){
+  const you=S.settings.you?S.settings.you+", ":"";
+  if(crisis) return `${you}salamat sa pagiging honest mo sa akin. Nandito ako at nakikinig, pero gusto ko ring may totoong tao kang makausap ngayon. Ang NCMH Crisis Hotline ay bukas 24/7 sa 1553 o 0917-899-8727. Kung nasa panganib ka ngayon mismo, tumawag sa 911.`;
+  const last=[...e.chat].reverse().find(m=>m.role==="user");
+  if(!last){
+    if(e.deed==="harsh") return `${you}okay lang 'yan. Tao tayo, nagkakamali talaga minsan. Ang mahalaga, inamin mo, at proud ako doon. Ano'ng nangyari kanina?`;
+    if(e.mood&&e.mood<=2) return `${you}parang mabigat ang araw mo today. Hindi mo kailangang ayusin lahat ngayon. Gusto mo bang ikwento kung ano ang pinakamabigat?`;
+    if(e.deed==="peace"||e.deed==="helped") return `${you}ang ganda ng ginawa mo today. Hindi lahat pumipili ng kabutihan kapag mahirap. Kwento mo pa, ano'ng naramdaman mo after?`;
+    if(e.mood>=4) return `${you}ramdam ko ang good vibes sa sinulat mo. Ano ang pinaka-favorite moment mo today?`;
+    return `${you}salamat sa pag-share. Nandito lang ako palagi para makinig. Kumusta ang pakiramdam mo ngayong naisulat mo na?`;
+  }
+  const t=last.text.toLowerCase();
+  if(/salamat|thank/.test(t)) return pick(["Anytime. You know I've got your back.","Walang anuman. Balik ka lang dito kahit kailan."]);
+  if(/pagod|tired|exhaust|antok/.test(t)) return pick(["Ang dami mong binuhat today. Pahinga ka muna, deserve mo 'yan.","Gets. Minsan ang pinaka-productive na gawin ay matulog nang maaga."]);
+  if(/stress|anxious|kabado|worried|nag-aalala|takot/.test(t)) return pick(["Hinga muna tayo. Isa-isahin natin. Alin dito ang kaya mong gawin bukas?","Normal lang kabahan. Ano ang pinakamaliit na hakbang na pwede mong gawin ngayon?"]);
+  if(/haha|hehe|lol|happy|masaya|saya/.test(t)) return pick(["Ang saya naman! Sana mas marami pang ganitong araw.","Love this. Itago natin 'to sa memory bank."]);
+  if(/okay lang|ok lang|wala|fine/.test(t)) return pick(["Mabuti naman. Minsan ang tahimik na araw ay regalo din.","Sige lang. Kung may gusto kang idagdag mamaya, nandito lang ako."]);
+  return pick(["Felt. Sobrang nakaka-relate ako diyan.","Ganyan talaga minsan, pero kinakaya mo palagi. Proud of you.","Gets. Sige lang, ilabas mo lang lahat ng gusto mong sabihin.","Naiintindihan kita. Ano sa tingin mo ang kailangan mo ngayon?"]);
+}
+async function sendChat(ev){
+  ev.preventDefault();
+  const inp=$("#chatInput");const val=inp.value.trim();if(!val) return;
+  const e=getEntry(current);
+  if(!e.saved){flushDraft();e.saved=true;e.points=0;} // allow chatting before saving, no points yet
+  e.chat.push({role:"user",text:val});inp.value="";
+  renderChat();DB.set("entries",S.entries);
+  companionTurn(e);
+}
+
+/* ---------- images ---------- */
+function readImage(file,max=1400,q=.84){
+  return new Promise((res,rej)=>{
+    if(!file||!/^image\//.test(file.type)) return rej(new Error("Not an image"));
+    const fr=new FileReader();
+    fr.onload=()=>{const img=new Image();img.onload=()=>{
+      const s=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement("canvas");
+      c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      try{res(c.toDataURL("image/jpeg",q))}catch(e){res(fr.result)}
+    };img.onerror=()=>rej(new Error("Bad image"));img.src=fr.result};
+    fr.onerror=()=>rej(fr.error);fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- garden drawing ---------- */
+function plantSVG(i){
+  const stemH=[46,30,52,78,100,112,118][i];
+  const top=168-stemH;
+  const dry=i===0;
+  const leafFill=dry?"var(--leaf-dry)":"var(--leaf)";
+  let leaves="";
+  const n=[2,2,2,4,6,6,8][i];
+  for(let k=0;k<n;k++){
+    const side=k%2?1:-1;const t=(Math.floor(k/2)+1)/(Math.ceil(n/2)+1);
+    const y=168-stemH*t;const len=i===1?12:16+ (i>3?4:0);
+    const rot=dry?side*(60+k*4):side*-35;
+    leaves+=`<ellipse cx="${100+side*len*0.7}" cy="${y+(dry?6:0)}" rx="${len}" ry="${len*0.42}" fill="${leafFill}" transform="rotate(${rot} ${100+side*len*0.7} ${y})" opacity="${dry?0.85:1}"/>`;
+  }
+  const stem=dry?`<path d="M100 168 Q104 ${top+18} 118 ${top+14}" stroke="var(--leaf-dry)" stroke-width="4" fill="none" stroke-linecap="round"/>`
+                :`<path d="M100 168 Q${i>2?96:100} ${168-stemH/2} 100 ${top}" stroke="var(--leaf)" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  const flower=(cx,cy,r)=>{let p="";for(let a=0;a<6;a++){const ang=a*Math.PI/3;p+=`<circle cx="${(cx+Math.cos(ang)*r).toFixed(1)}" cy="${(cy+Math.sin(ang)*r).toFixed(1)}" r="${(r*0.78).toFixed(1)}" fill="var(--accent)" opacity=".92"/>`}return p+`<circle cx="${cx}" cy="${cy}" r="${(r*0.62).toFixed(1)}" fill="var(--gold)"/>`};
+  let crown="";
+  if(i===4) crown=`<ellipse cx="100" cy="${top-6}" rx="8" ry="12" fill="var(--accent)" opacity=".9"/><path d="M93 ${top+2} Q100 ${top-4} 107 ${top+2}" stroke="var(--leaf)" stroke-width="3" fill="none"/>`;
+  if(i>=5) crown=flower(100,top-4,10);
+  if(i===6) crown+=`<path d="M100 ${top+40} Q80 ${top+30} 66 ${top+18}" stroke="var(--leaf)" stroke-width="3" fill="none"/><path d="M100 ${top+54} Q122 ${top+44} 136 ${top+30}" stroke="var(--leaf)" stroke-width="3" fill="none"/>`+flower(66,top+14,7)+flower(136,top+26,7);
+  return `<svg viewBox="0 0 200 220" role="img" aria-label="${STAGES[i].name}">
+    <ellipse cx="100" cy="214" rx="52" ry="4" fill="var(--ink)" opacity=".08"/>
+    ${stem}${leaves}${crown}
+    <path d="M62 168 H138 L128 212 H72 Z" fill="var(--gold)"/>
+    <rect x="58" y="162" width="84" height="12" rx="4" fill="var(--gold)"/>
+    <rect x="58" y="162" width="84" height="5" rx="2.5" fill="var(--ink)" opacity=".12"/>
+  </svg>`;
+}
+function stageProgress(p){const i=stageIndex(p);const lo=i===0?0:STAGES[i-1].max;const hi=STAGES[i].max;return {i,pct:hi===Infinity?100:Math.max(4,Math.round((p-lo)/(hi-lo)*100)),toNext:hi===Infinity?0:hi-p+1}}
+function renderRail(){
+  const {i,pct}=stageProgress(S.garden.points);
+  $("#railPlant").innerHTML=plantSVG(i);$("#railStage").textContent=STAGES[i].name;$("#railMeter").style.width=pct+"%";
+}
+function renderGarden(){
+  const p=S.garden.points;const {i,toNext}=stageProgress(p);
+  $("#gardenArt").innerHTML=plantSVG(i);
+  $("#gardenStage").textContent=STAGES[i].name;
+  $("#gardenNote").textContent=STAGES[i].note;
+  $("#gardenPts").textContent=`${p} growth points`;
+  $("#ladder").innerHTML=STAGES.map((s,k)=>`<span class="rung ${k<i?"done":k===i?"now":""}" title="${s.name}"></span>`).join("");
+  $("#gardenNext").textContent=toNext?`${toNext} more to reach ${STAGES[i+1].name}`:"Highest stage reached. Keep tending it.";
+  const log=S.garden.log.slice(0,10);
+  $("#gardenLog").innerHTML=log.length?log.map(l=>`<div class="log-row"><span><span class="num muted" style="font-size:12px">${shortDate(l.day)}</span>&nbsp;&nbsp;${esc(l.why)}</span><span class="num ${l.pts<0?"negc":"pos"}">${l.pts>0?"+":""}${l.pts}</span></div>`).join(""):`<div class="muted" style="font-size:14px">Wala pa. Save your first entry to water the garden.</div>`;
+}
+
+/* ---------- journal ---------- */
+function savedEntries(){return Object.values(S.entries).filter(e=>e.saved&&(e.body.trim()||e.title.trim())).sort((a,b)=>b.id.localeCompare(a.id))}
+function renderJournal(){
+  const q=$("#searchInput").value.trim().toLowerCase();
+  let list=savedEntries();
+  if(q) list=list.filter(e=>(e.title+" "+e.body+" "+e.grateful).toLowerCase().includes(q));
+  const box=$("#entries");
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="display">${q?"Walang nahanap":"Your first page is waiting"}</div><div>${q?"Try a different word.":"Write today's entry and it will appear here."}</div></div>`;return}
+  box.innerHTML=list.map(e=>{
+    const m=MOODS.find(x=>x.k===e.mood);
+    return `<button class="entry" data-open="${e.id}"><div class="entry-body"><div class="entry-meta"><span class="eyebrow">${shortDate(e.id)}</span>${m?`<span class="dot" style="background:var(--m${m.k})" title="${m.label}"></span><span class="muted" style="font-size:12.5px">${m.label}</span>`:""}</div><h3>${esc(e.title||"Untitled entry")}</h3><p>${esc(e.body.slice(0,240))}</p></div>${e.photo?`<img src="${e.photo}" alt="">`:""}</button>`;
+  }).join("");
+}
+
+/* ---------- insights ---------- */
+function streak(){
+  const has=id=>{const e=S.entries[id];return e&&e.saved&&(e.body.trim()||e.title.trim())};
+  let d=new Date();if(!has(dayId(d))) d.setDate(d.getDate()-1);
+  let n=0;while(has(dayId(d))){n++;d.setDate(d.getDate()-1)}return n;
+}
+function renderInsights(){
+  const list=savedEntries();
+  const totalWords=list.reduce((a,e)=>a+words(e.body),0);
+  const moods=list.filter(e=>e.mood);const avg=moods.length?(moods.reduce((a,e)=>a+e.mood,0)/moods.length):0;
+  const avgLabel=avg?MOODS.find(m=>m.k===Math.round(avg)).label:"—";
+  $("#stats").innerHTML=[[streak(),"Day streak"],[list.length,"Entries"],[totalWords.toLocaleString("en-PH"),"Words written"],[avgLabel,"Usual mood"]].map(([v,k])=>`<div class="stat"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
+  // chart
+  const W=640,H=210,L=74,R=16,T=14,B=30,iw=W-L-R,ih=H-T-B;
+  const days=[];for(let k=13;k>=0;k--){const d=new Date();d.setDate(d.getDate()-k);days.push(dayId(d))}
+  const x=k=>L+iw*(k/13), y=m=>T+ih*((5-m)/4);
+  let g="";
+  MOODS.forEach(m=>{g+=`<line x1="${L}" x2="${W-R}" y1="${y(m.k)}" y2="${y(m.k)}" stroke="var(--line)"/><text x="${L-12}" y="${y(m.k)+4}" text-anchor="end" font-size="11.5" fill="var(--muted)" font-family="Manrope,system-ui,sans-serif">${m.label}</text>`});
+  days.forEach((id,k)=>{if(k%2===0||k===13) g+=`<text x="${x(k)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${fromId(id).getDate()}</text>`});
+  let path="",prev=false;
+  days.forEach((id,k)=>{const e=S.entries[id];const m=e&&e.saved&&e.mood;if(m){path+=(prev?"L":"M")+x(k).toFixed(1)+" "+y(m).toFixed(1)+" ";prev=true}else prev=false});
+  if(path) g+=`<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity=".55"/>`;
+  days.forEach((id,k)=>{const e=S.entries[id];const m=e&&e.saved&&e.mood;if(m) g+=`<circle cx="${x(k)}" cy="${y(m)}" r="${k===13?6.5:5}" fill="var(--m${m})" stroke="var(--surface)" stroke-width="2"><title>${shortDate(id)}: ${MOODS.find(z=>z.k===m).label}</title></circle>`});
+  const any=days.some(id=>S.entries[id]&&S.entries[id].saved&&S.entries[id].mood);
+  $("#moodChart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mood over the last 14 days">${g}${any?"":`<text x="${L+iw/2}" y="${T+ih/2}" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="Manrope,system-ui,sans-serif">Pick a mood when you write and it will show here</text>`}</svg>`;
+  $("#moodLegend").innerHTML=MOODS.map(m=>`<span><i class="dot" style="background:var(--m${m.k})"></i>${m.label}</span>`).join("");
+  const month=dayId().slice(0,7);const counts={};list.filter(e=>e.id.startsWith(month)&&e.deed).forEach(e=>counts[e.deed]=(counts[e.deed]||0)+1);
+  $("#deedSummary").innerHTML=DEEDS.map(d=>`<div class="log-row"><span>${esc(d.label)}</span><span class="num">${counts[d.k]||0}&times;</span></div>`).join("");
+}
+
+/* ---------- helplines ---------- */
+function renderLines(){
+  $("#lines").innerHTML=LINES.map(l=>`<div class="line-card"><span class="badge">${l.badge}</span><div><h3>${l.name}</h3><div class="muted" style="font-size:13px">${l.org}</div></div>
+    ${l.nums.map(([n,lab])=>`<div class="phone-row"><span><span class="num">${n}</span><small>${lab}</small></span><span class="phone-actions"><a class="btn sm" href="tel:${n.replace(/[^\d+]/g,"")}" aria-label="Call ${n}"><svg class="ic"><use href="#i-phone"/></svg>Call</a><button class="btn ghost sm" data-copy="${n}" aria-label="Copy ${n}"><svg class="ic"><use href="#i-copy"/></svg></button></span></div>`).join("")}</div>`).join("");
+}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select the text to copy it")}ta.remove()}}
+
+/* ---------- settings ---------- */
+function applySkin(){if(S.settings.skin&&S.settings.skin!=="auto") document.documentElement.setAttribute("data-skin",S.settings.skin); else document.documentElement.removeAttribute("data-skin")}
+function applyBg(){const a=$("#app");if(S.settings.bg){a.style.setProperty("--user-bg",`url("${S.settings.bg}")`);a.classList.add("has-bg")}else{a.classList.remove("has-bg");a.style.removeProperty("--user-bg")}}
+function applyCover(){const c=$("#cover");if(S.settings.cover){c.style.backgroundImage=`url("${S.settings.cover}")`;c.classList.add("has-img")}else{c.style.backgroundImage="";c.classList.remove("has-img")}}
+function applyNames(){
+  const n=S.settings.companion||"Luna";
+  $("#salute").textContent=`Dear ${n},`;$("#compName").textContent=n;$("#compAvatar").textContent=n.trim().charAt(0).toUpperCase()||"L";
+  $("#chatInput").placeholder=`Reply to ${n}...`;
+}
+function renderSettings(){
+  $("#setYou").value=S.settings.you;$("#setCompanion").value=S.settings.companion;$("#setAutolock").value=String(S.settings.autolock);
+  $("#swatches").innerHTML=SKINS.map(s=>`<button class="swatch" data-skin="${s.k}" aria-pressed="${S.settings.skin===s.k}"><span style="background:linear-gradient(135deg,${s.c[0]} 50%,${s.c[1]} 50%)"></span>${s.label}</button>`).join("");
+}
+function backupJSON(){return JSON.stringify({app:"sanctuary-diary",version:2,exportedAt:new Date().toISOString(),settings:S.settings,entries:S.entries,garden:S.garden},null,1)}
+
+function renderAll(){applyNames();renderRail();renderSettings();renderLines();if(!current) openEntry(dayId());go(view)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",async ev=>{
+  const t=ev.target.closest("button,a");if(!t) return;
+  if(t.matches(".key")){pressKey(t.dataset.k);return}
+  if(t.dataset.go){go(t.dataset.go,{newToday:!!t.dataset.new});return}
+  if(t.dataset.action==="lock"){lockNow();return}
+  if(t.dataset.mood){const e=getEntry(current);const k=+t.dataset.mood;e.mood=e.mood===k?0:k;renderMood();queueDraft();return}
+  if(t.dataset.deed){const e=getEntry(current);e.deed=e.deed===t.dataset.deed?null:t.dataset.deed;renderDeeds();updateGrowthPreview();queueDraft();return}
+  if(t.dataset.open){openEntry(t.dataset.open);go("today");return}
+  if(t.dataset.copy){copyText(t.dataset.copy);return}
+  if(t.dataset.skin){S.settings.skin=t.dataset.skin;applySkin();renderSettings();DB.set("settings",S.settings);return}
+  switch(t.id){
+    case "saveBtn":saveEntry();break;
+    case "backToday":openEntry(dayId());break;
+    case "coverBtn":$("#coverFile").click();break;
+    case "photoBtn":$("#photoFile").click();break;
+    case "photoRemove":{const e=getEntry(current);e.photo=null;renderPhoto();DB.set("entries",S.entries);break}
+    case "bgBtn":$("#bgFile").click();break;
+    case "bgReset":S.settings.bg=null;applyBg();DB.set("settings",S.settings);toast("Background removed");break;
+    case "savePinBtn":{const v=$("#setPin").value;if(!/^\d{4}$/.test(v)){toast("PIN must be exactly 4 digits");break}
+      const salt=newSalt();S.pin={salt,hash:await hashPin(v,salt)};await DB.set("pin",S.pin);$("#setPin").value="";toast("PIN updated");break}
+    case "exportBtn":{try{const blob=new Blob([backupJSON()],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`sanctuary-backup-${dayId()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast("Backup downloaded")}catch(e){toast("Download blocked here. Use Copy backup text instead.")}break}
+    case "copyBackupBtn":copyText(backupJSON());break;
+    case "importBtn":$("#importFile").click();break;
+    case "eraseBtn":
+    case "resetAllBtn":{
+      if(!eraseArmed){eraseArmed=true;t.classList.add("armed");t.lastChild.textContent=" Tap again to erase forever";setTimeout(()=>{eraseArmed=false;t.classList.remove("armed");t.lastChild.textContent=t.id==="eraseBtn"?"Erase everything":"Erase diary and start over"},4000);break}
+      await DB.clear();location.reload();break}
+  }
+});
+document.addEventListener("keydown",ev=>{
+  lastActive=Date.now();
+  if(locked){if(/^\d$/.test(ev.key))pressKey(ev.key);else if(ev.key==="Backspace")pressKey("del")}
+});
+["pointerdown","input","scroll"].forEach(n=>document.addEventListener(n,()=>{lastActive=Date.now()},{passive:true,capture:true}));
+setInterval(()=>{const m=+S.settings.autolock;if(!locked&&m>0&&Date.now()-lastActive>m*60000) lockNow()},10000);
+
+$("#entryTitle").addEventListener("input",queueDraft);
+$("#entryGrateful").addEventListener("input",queueDraft);
+$("#entryBody").addEventListener("input",()=>{autosize();updateCount();queueDraft()});
+$("#searchInput").addEventListener("input",renderJournal);
+$("#chatForm").addEventListener("submit",sendChat);
+$("#setYou").addEventListener("change",e=>{S.settings.you=e.target.value.trim();DB.set("settings",S.settings);toast("Name saved")});
+$("#setCompanion").addEventListener("change",e=>{S.settings.companion=e.target.value.trim()||"Luna";applyNames();renderChat();DB.set("settings",S.settings);toast("Companion renamed")});
+$("#setAutolock").addEventListener("change",e=>{S.settings.autolock=+e.target.value;DB.set("settings",S.settings)});
+$("#photoFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{getEntry(current).photo=await readImage(f,1400);renderPhoto();DB.set("entries",S.entries)}catch(err){toast("Hindi ma-open ang image na 'yan")}});
+$("#coverFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{S.settings.cover=await readImage(f,1800);applyCover();DB.set("settings",S.settings)}catch(err){toast("Hindi ma-open ang image na 'yan")}});
+$("#bgFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{S.settings.bg=await readImage(f,2000,.8);applyBg();DB.set("settings",S.settings);toast("Background updated")}catch(err){toast("Hindi ma-open ang image na 'yan")}});
+$("#importFile").addEventListener("change",e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const fr=new FileReader();fr.onload=async()=>{
+  try{const d=JSON.parse(fr.result);if(d.app!=="sanctuary-diary"||!d.entries) throw 0;
+    S.settings=Object.assign(S.settings,d.settings||{});S.entries=d.entries;S.garden=d.garden||S.garden;
+    await saveAll(["settings","entries","garden"]);current=null;applySkin();applyBg();applyCover();renderAll();toast(`Restored ${savedEntries().length} entries`)}
+  catch(err){toast("That file isn't a Sanctuary backup")}
+};fr.readAsText(f)});
+document.addEventListener("visibilitychange",()=>{if(document.hidden) flushDraft()});
+
+/* ---------- boot ---------- */
+(async function boot(){
+  const [settings,entries,garden,pin]=await Promise.all([DB.get("settings"),DB.get("entries"),DB.get("garden"),DB.get("pin")]);
+  if(settings) Object.assign(S.settings,settings);
+  if(entries) S.entries=entries;
+  if(garden) S.garden=garden;
+  S.pin=pin||null;
+  // carry over from the old version of the app (same website only)
+  if(!settings&&!garden){
+    const oldName=ls.get("diary-ai-name"),oldPts=ls.get("plant-growth-pts"),oldPin=ls.get("diary-pin");
+    if(oldName) S.settings.companion=oldName;
+    if(oldPts&&!isNaN(+oldPts)) S.garden.points=Math.max(0,+oldPts);
+    if(oldPin&&/^\d{4}$/.test(oldPin)&&!S.pin){const salt=newSalt();S.pin={salt,hash:await hashPin(oldPin,salt)};await DB.set("pin",S.pin);ls.del("diary-pin")}
+    if(oldName||oldPts) await saveAll(["settings","garden"]);
+  }
+  applySkin();applyBg();applyCover();applyNames();renderRail();
+  pinMode=S.pin?"unlock":"setup";setLockUI();
+})();
+})();
+</script>
+</body>
+</html>
